@@ -59,39 +59,48 @@
 										<div class="form-group">
 											<label for="exampleInputId">Identity number/Passport number</label>
 											<input type="text" class="form-control" name="identityNumber" aria-describedby="idHelp"  placeholder="Enter identity number" ng-model="identity" ng-pattern="regex" required>
-											<small id="idHelp" class="form-text text-muted">We'll never share your identity number with anyone else.</small>
+											<!-- <small id="idHelp" class="form-text text-muted">We'll never share your identity number with anyone else.</small> -->
 
 											<!-- error handling stuff -->
-											<div ng-show="bookingForm.$submitted || bookinForm.identityNumber.$touched">
-												<span ng-show="bookingForm.identityNumber.$error.required">required field</span>
-												<!-- <span ng-show="bookingForm.uEm.$error.email">This is not a valid email.</span> -->
+											<div ng-show="bookingForm.$submitted || bookingForm.identityNumber.$touched">
+												<span ng-show="bookingForm.identityNumber.$error.required" style="color:red;">required field</span>
+												<span ng-show="bookingForm.identityNumber.$error.pattern" style="color:red;">invalid identity number.</span>
 											</div>
 
 										</div>
 										
 										<!-- gender radio buttons -->
-										<label for="inputGender">Gender</label>
-											<div class="form-group">
-												<div class="custom-control custom-radio custom-control-inline">
-													<input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
-													<label class="custom-control-label" for="defaultInline1">Male</label>
+										<div class="form-group">
+											<label for="inputGender">Gender</label>
+												<div class="form-group">
+													<input type="radio" name='genderSelection' ng-model="color" value="Male" required>  Male
+													<input type="radio" name='genderSelection' ng-model="color" value="Female" required> Female 
+														<!-- error handling stuff -->
+													<div ng-show="bookingForm.$submitted">
+														<span ng-show="bookingForm.genderSelection.$error.required" style="color:red;">required field</span>
+													</div>
 												</div>
-												
-											
-												<div class="custom-control custom-radio custom-control-inline">
-													<input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample">
-													<label class="custom-control-label" for="defaultInline2">Female</label>
+										</div>
+
+										<!-- building drop down -->
+										<div class="form-group">
+											<label for="inputBuilding">Building</label>
+												<select ng-model="selectedBuilding" name="buildingSelection" ng-options="building for building in buildings" required></select>
+												<div ng-show="bookingForm.$submitted">
+													<span ng-show="bookingForm.buildingSelection.$error.required" style="color:red;">required field</span>
 												</div>
+										</div>
+
+										<!-- building drop down -->
+										<div class="form-group">
+											<label for="inputRoomType">Room type</label>
+											<select ng-model="selectedRoomType" name="roomTypeSelection" ng-options="type for type in roomTypes" required></select>
+											<div ng-show="bookingForm.$submitted">
+												<span ng-show="bookingForm.roomTypeSelection.$error.required" style="color:red;">required field</span>
 											</div>
+										</div>
 
-										<!-- building drop down -->
-										<label for="inputBuilding">Building</label>
-											<select ng-model="selectedBuilding" ng-options="building for building in buildings"></select></br>
-
-										<!-- building drop down -->
-										</br><label for="inputRoomType">Room type</label>
-										<select ng-model="selectedRoomType" ng-options="type for type in roomTypes"></select>
-
+										<!-- submision button -->
 										<div>
 											</br><button type="submit" class="btn btn-warning">Submit</button>
 										</div></br>

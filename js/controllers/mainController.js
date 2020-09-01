@@ -27,22 +27,18 @@ mainApp.controller( "mainController", function( $scope , $http ) {
 			$scope.roomTypes = ["2 Sharing Apartment","3 Sharing Apartment"];
 
 			//identity number model
-			// $scope.identityNumber="";
+			$scope.identityNumber="";
+
+			
 
 			//booking form validation
 			$scope.submitBookingForm = function(bookingForm){
-				console.log(bookingForm);
-				if(bookingForm.valid){
+				
+				if(bookingForm.$valid){
 					alert("form valid");
 				}
 
-				else{
-					
-				}
-				console.log(bookingForm.$isValid);
-				// the form is invalid why?
-				// var pattern = $scope.identityNumber.match(regexp)
-				// console.log(pattern);
+				//TODO strict conditions on identity form input
 			}
 
 			});
