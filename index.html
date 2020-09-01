@@ -55,11 +55,18 @@
 								
 								<!-- form you will see once you click book -->
 								<div class="container" ng-show="showBookingMenu">
-									<form>
+									<form name="bookingForm" ng-submit="submitBookingForm(bookingForm)" novalidate>
 										<div class="form-group">
 											<label for="exampleInputId">Identity number/Passport number</label>
-											<input type="text" class="form-control" id="exampleInputId" aria-describedby="idHelp" placeholder="Enter identity number	">
+											<input type="text" class="form-control" name="identityNumber" aria-describedby="idHelp"  placeholder="Enter identity number" ng-model="identity" ng-pattern="regex" required>
 											<small id="idHelp" class="form-text text-muted">We'll never share your identity number with anyone else.</small>
+
+											<!-- error handling stuff -->
+											<div ng-show="bookingForm.$submitted || bookinForm.identityNumber.$touched">
+												<span ng-show="bookingForm.identityNumber.$error.required">required field</span>
+												<!-- <span ng-show="bookingForm.uEm.$error.email">This is not a valid email.</span> -->
+											</div>
+
 										</div>
 										
 										<!-- gender radio buttons -->
