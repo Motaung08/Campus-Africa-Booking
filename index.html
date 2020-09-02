@@ -73,8 +73,8 @@
 										<div class="form-group">
 											<label for="inputGender">Gender</label>
 												<div class="form-group">
-													<input type="radio" name='genderSelection' ng-model="selectedGender" value="Male" required>  Male
-													<input type="radio" name='genderSelection' ng-model="selectedGender" value="Female" required> Female 
+													<input type="radio" name='genderSelection' ng-model="selectedGender" value="Male" ng-change="onGenderChange()" required>  Male
+													<input type="radio" name='genderSelection' ng-model="selectedGender" value="Female" ng-change="onGenderChange()" required> Female 
 														<!-- error handling stuff -->
 													<div ng-show="bookingForm.$submitted">
 														<span ng-show="bookingForm.genderSelection.$error.required" style="color:red;">required field</span>
@@ -85,7 +85,7 @@
 										<!-- building drop down -->
 										<div class="form-group">
 											<label for="inputBuilding">Building</label>
-												<select ng-model="selectedBuilding" name="buildingSelection" ng-options="building for building in buildings" required></select>
+												<select ng-model="selectedBuilding" name="buildingSelection" ng-options="building for building in buildings" ng-change="onBuildingChange()" required></select>
 												<div ng-show="bookingForm.$submitted">
 													<span ng-show="bookingForm.buildingSelection.$error.required" style="color:red;">required field</span>
 												</div>
@@ -94,10 +94,32 @@
 										<!-- building drop down -->
 										<div class="form-group">
 											<label for="inputRoomType">Room type</label>
-											<select ng-model="selectedRoomType" name="roomTypeSelection" ng-options="type for type in roomTypes" required></select>
+											<select ng-model="selectedRoomType" name="roomTypeSelection" ng-options="type for type in roomTypes" ng-change="onRoomTypeChange()" required></select>
 											<div ng-show="bookingForm.$submitted">
 												<span ng-show="bookingForm.roomTypeSelection.$error.required" style="color:red;">required field</span>
 											</div>
+										</div>
+
+										<!-- available rooms table | actually should be a pagination here -->
+										<div>
+											<nav class="navbar navbar-light bg-light">
+												<span class="navbar-brand mb-0 h1">Available rooms</span>
+											</nav>
+
+											<table id="roomTable" class="table table-bordered table-hover table-sm">
+												<thead >
+													<tr>
+														<th class="th-sm" ng-repeat="x in columns">{{x}}</th>
+													</tr>
+												</thead>
+		
+												<tr ng-repeat="x in availableRooms">
+													<td>{{ x.unit }}</td>
+													<td>{{ x.room }}</td>
+												</tr>
+
+											</table>
+
 										</div>
 
 										<!-- submision button -->

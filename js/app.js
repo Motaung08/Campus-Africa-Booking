@@ -3,18 +3,24 @@ var mainApp = angular.module("mainApp",[]);
 mainApp.factory('dataFactory', function($http) {
         var factory={};
 
+				factory.identityNumberExists = function(identityNumber) {
+
+					return $http({
+						method : "GET",
+							url : "http://0.0.0.0:5000/tenants?id="+identityNumber,
+							headers: { 
+								"Content-Type": "application/json"
+							}
+					});
+				}
+
         factory.getRooms = function(type) {
-            $http({
+            return $http({
                 method : "GET",
                     url : "http://0.0.0.0:5000/rooms?type="+type,
                     headers: { 
                         "Content-Type": "application/json"
                     }
-            }).then(function onSuccess(response) {
-                var results=response.data;
-                console.log(results);
-            }, function onError(response) {
-                console.log(response.statusText);
             });
         }
 
@@ -22,7 +28,12 @@ mainApp.factory('dataFactory', function($http) {
     });
 
 mainApp.service('dataService', function(dataFactory) {
-        this.getRooms = function(type) {
+				
+				this.identityNumberExists = function(identityNumber){
+					return dataFactory.identityNumberExists(identityNumber);
+				}
+
+				this.getRooms = function(type) {
            return dataFactory.getRooms(type);
         }
     });

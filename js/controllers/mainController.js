@@ -33,26 +33,47 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 			$scope.submitBookingForm = function(bookingForm){
 				
 				if(bookingForm.$valid){
-					$scope.getAvailableRooms();
+					//$scope.getAvailableRooms();
 				}
 				//TODO strict conditions on identity form input for Moss
 			}
 
-			//check if tenant does not have booking ready
-			$scope.queryIdentityNumber = function(){
-				
+			//changing parameters
+			$scope.onGenderChange = function(){
+				$scope.genderSelected=true;
+				$scope.getAvailableRooms();
 			}
+			$scope.onBuildingChange = function(){
+				$scope.buildingSelected=true;
+				$scope.getAvailableRooms();
+			}
+
+			$scope.onRoomTypeChange = function(){
+				$scope.roomTypeSelected=true; 
+				$scope.getAvailableRooms();
+			}
+
+			//columns for rooms table
+			$scope.columns=["Unit","Room"]
+
 			//fetch available rooms function 
-			
 			$scope.getAvailableRooms = function() {
-				console.log($scope.identityNumber);
-				console.log($scope.selectedGender);
-				console.log($scope.selectedBuilding);
-				console.log($scope.selectedRoomType);
-				console.log($scope.encodeSearchParameters())
-				
-				var type = $scope.encodeSearchParameters();
-				$scope.result = dataService.getRooms(type);
+		
+				if($scope.genderSelected && $scope.roomTypeSelected && $scope.buildingSelected){
+					var type = $scope.encodeSearchParameters();
+					$scope.availableRooms = dataService.getRooms(type).then(function onSuccess(response) {
+						var results = response.data;
+						results = $scope.formatData(results);
+						$scope.availableRooms=results;
+					}, function onError(response) {
+						console.log("data retrival error "+response.statusText);
+				});
+					
+				}
+				else{
+					console.log("Missing parameters");
+				}
+
 			}
 
 			//encode room type using gender and apartment
@@ -67,6 +88,19 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 				return code;
 			}
 
+			//format the data to be displayed
+			//format available rooms data
+			$scope.formatData = function(results){
+				for(var i=0;i<results.length;++i){
+					var room=results[i]["room"];
 
+					//first two are building encodings so remove it
+					results[i]["unit"]=parseInt(room.substring(3,room.length-1));
+					results[i]["room"]=room[room.length-1];
+					
+				}
+
+				return results;
+			}
 
 		});
