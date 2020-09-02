@@ -1,5 +1,5 @@
 
-mainApp.controller( "mainController", function( $scope , $http ) {
+mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 			
 			// action variaable booking/ tracking
 			$scope.mapAction = function(action){
@@ -29,16 +29,44 @@ mainApp.controller( "mainController", function( $scope , $http ) {
 			//identity number model
 			$scope.identityNumber="";
 
-			
-
 			//booking form validation
 			$scope.submitBookingForm = function(bookingForm){
 				
 				if(bookingForm.$valid){
-					alert("form valid");
+					$scope.getAvailableRooms();
 				}
-
-				//TODO strict conditions on identity form input
+				//TODO strict conditions on identity form input for Moss
 			}
 
-			});
+			//check if tenant does not have booking ready
+			$scope.queryIdentityNumber = function(){
+				
+			}
+			//fetch available rooms function 
+			
+			$scope.getAvailableRooms = function() {
+				console.log($scope.identityNumber);
+				console.log($scope.selectedGender);
+				console.log($scope.selectedBuilding);
+				console.log($scope.selectedRoomType);
+				console.log($scope.encodeSearchParameters())
+				
+				var type = $scope.encodeSearchParameters();
+				$scope.result = dataService.getRooms(type);
+			}
+
+			//encode room type using gender and apartment
+			$scope.encodeSearchParameters = function(){
+				var roomTypeMap = {"2 Sharing Apartment":"2","3 Sharing Apartment":"3"};
+				var roomTypeCode = roomTypeMap[$scope.selectedRoomType];
+				var genderMap = {"Male":"M","Female":"F"};
+				var genderCode=genderMap[$scope.selectedGender];
+
+				var code = roomTypeCode+genderCode;
+
+				return code;
+			}
+
+
+
+		});
