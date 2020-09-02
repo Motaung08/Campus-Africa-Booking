@@ -1,4 +1,4 @@
-var mainApp = angular.module("mainApp",['ui.bootstrap.pagination']);
+var mainApp = angular.module("mainApp",['ui.bootstrap.pagination', 'ngAnimate']);
 
 mainApp.factory('dataFactory', function($http) {
         var factory={};
