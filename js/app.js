@@ -1,4 +1,4 @@
-var mainApp = angular.module("mainApp",[]);
+var mainApp = angular.module("mainApp",['ui.bootstrap.pagination']);
 
 mainApp.factory('dataFactory', function($http) {
         var factory={};
@@ -8,7 +8,7 @@ mainApp.factory('dataFactory', function($http) {
 					return $http({
 						method : "GET",
 							url : "http://0.0.0.0:5000/tenants?id="+identityNumber,
-							headers: { 
+							headers: {
 								"Content-Type": "application/json"
 							}
 					});
@@ -18,7 +18,7 @@ mainApp.factory('dataFactory', function($http) {
             return $http({
                 method : "GET",
                     url : "http://0.0.0.0:5000/rooms?type="+type,
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json"
                     }
             });
@@ -28,7 +28,7 @@ mainApp.factory('dataFactory', function($http) {
     });
 
 mainApp.service('dataService', function(dataFactory) {
-				
+
 				this.identityNumberExists = function(identityNumber){
 					return dataFactory.identityNumberExists(identityNumber);
 				}

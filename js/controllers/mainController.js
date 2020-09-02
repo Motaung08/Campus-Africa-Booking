@@ -1,6 +1,6 @@
 
 mainApp.controller( "mainController", function( $scope , $http,dataService ) {
-			
+
 			// action variaable booking/ tracking
 			$scope.mapAction = function(action){
 
@@ -19,7 +19,7 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 
 			//regular expression to check for SA id number pattern
 			$scope.regex = '(([0-9][0-9][0-1][0-9][0-3][0-9])([0-9][0-9][0-9][0-9])([0-1])([0-9])([0-9]))'
-			
+
 			//building variables array
 			$scope.buildings = ["49 Jorissen"]
 
@@ -31,7 +31,7 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 
 			//booking form validation
 			$scope.submitBookingForm = function(bookingForm){
-				
+
 				if(bookingForm.$valid){
 					//$scope.getAvailableRooms();
 				}
@@ -49,26 +49,28 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 			}
 
 			$scope.onRoomTypeChange = function(){
-				$scope.roomTypeSelected=true; 
+				$scope.roomTypeSelected=true;
 				$scope.getAvailableRooms();
 			}
 
 			//columns for rooms table
 			$scope.columns=["Unit","Room"]
 
-			//fetch available rooms function 
+			//fetch available rooms function
 			$scope.getAvailableRooms = function() {
-		
+
 				if($scope.genderSelected && $scope.roomTypeSelected && $scope.buildingSelected){
 					var type = $scope.encodeSearchParameters();
 					$scope.availableRooms = dataService.getRooms(type).then(function onSuccess(response) {
 						var results = response.data;
 						results = $scope.formatData(results);
 						$scope.availableRooms=results;
+						$scope.noOfPages = Math.max(Math.ceil($scope.availableRooms.length / $scope.numPerPage),1);
+						$scope.setPage();
 					}, function onError(response) {
 						console.log("data retrival error "+response.statusText);
 				});
-					
+				
 				}
 				else{
 					console.log("Missing parameters");
@@ -97,10 +99,25 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 					//first two are building encodings so remove it
 					results[i]["unit"]=parseInt(room.substring(3,room.length-1));
 					results[i]["room"]=room[room.length-1];
-					
+
 				}
 
 				return results;
 			}
+
+			//Displaying the table of rooms avalilable
+			$scope.availableRooms = []
+			$scope.numPerPage = 10;
+			$scope.noOfPages = 1;
+			$scope.currentPage = 1;
+
+			$scope.setPage = function () {
+				var start = ($scope.currentPage - 1) * $scope.numPerPage
+				var end = start+$scope.numPerPage
+				$scope.data = $scope.availableRooms.slice( start, end );
+				console.log($scope.data);
+			};
+
+			$scope.$watch( 'currentPage', $scope.setPage );
 
 		});
