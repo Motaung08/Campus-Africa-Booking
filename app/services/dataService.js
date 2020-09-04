@@ -1,5 +1,3 @@
-var mainApp = angular.module("mainApp",['ui.bootstrap.pagination', 'ngAnimate']);
-
 mainApp.factory('dataFactory', function($http) {
         var factory={};
 
@@ -37,3 +35,4 @@ mainApp.service('dataService', function(dataFactory) {
            return dataFactory.getRooms(type);
         }
     });
+

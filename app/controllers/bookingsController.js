@@ -1,5 +1,4 @@
-
-mainApp.controller( "mainController", function( $scope , $http,dataService ) {
+mainApp.controller( "bookingsController", function( $scope , $http,dataService ) {
 
 			// action variaable booking/ tracking
 			$scope.mapAction = function(action){
@@ -26,17 +25,17 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 			//apartment types
 			$scope.roomTypes = ["2 Sharing Apartment","3 Sharing Apartment"];
 
+			// funding options
+			$scope.fundingOptions = ["NSFAS","Private bursar","Self funding"]
+
+			//study institution options
+			$scope.institutions = ["University of the Witwatersrand","Rosebank College"]
+
+			//study years
+			$scope.studyYears = ["1","2","3","4","Postgraduate"]
+
 			//identity number model
 			$scope.identityNumber="";
-
-			//booking form validation
-			$scope.submitBookingForm = function(bookingForm){
-
-				if(bookingForm.$valid){
-					//$scope.getAvailableRooms();
-				}
-				//TODO strict conditions on identity form input for Moss
-			}
 
 			//changing parameters
 			$scope.onGenderChange = function(){
@@ -150,5 +149,24 @@ mainApp.controller( "mainController", function( $scope , $http,dataService ) {
 
 			}
 
+			//form show variable
+			$scope.nextForm=false;
+
+			//booking form validation & submission
+			$scope.submitBookingForm = function(bookingForm){
+
+				if(bookingForm.$valid && $scope.selectedUnit!=null && $scope.selectedRoom!=null ){
+					$scope.nextForm=true;
+					console.log($scope.nextForm);
+				}
+				//TODO strict conditions on identity form input for Moss
+			}
+
+			//return to previos form
+			$scope.goBack = function(){
+				$scope.nextForm=false;
+				console.log($scope.nextForm);
+			}
+			
 
 		});
