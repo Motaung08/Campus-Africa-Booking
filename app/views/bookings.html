@@ -13,7 +13,7 @@
 				<div class="col">
 				</br>
 					<div class="container" ng-show="nextForm">
-						<form name="detailsForm"  novalidate>
+						<form name="detailsForm" ng-submit="test(detailsForm)"  novalidate>
 							<!-- <div class="form-group">
 								<label for="exampleInputId">Identity number/Passport number</label>
 								<input type="text" class="form-control" name="identityNumber" aria-describedby="idHelp"  placeholder="Enter identity number" ng-model="identityNumber" ng-pattern="regex" required>
@@ -21,37 +21,70 @@
 
 							<div class="form-group">
 								<label for="emailAddress">Email address</label>
-								<input type="email" class="form-control" id="enailAddress" placeholder="name@example.com">
+								<input type="email" class="form-control" id="emailAddress" placeholder="name@example.com" name="email" ng-model="email" required>
+
+								<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted || detailsForm.email.$touched">
+									<span ng-show="detailsForm.email.$error.required" style="color:red;">required field</span>
+									<span ng-show="!detailsForm.email.$valid && !detailsForm.email.$error.required" style="color:red;">invalid email address</span>
+								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="confirmEmailAddress">Confirm email address</label>
-								<input type="email" class="form-control" id="confirmEmailAddress" placeholder="name@example.com">
+								<input type="email" class="form-control" id="confirmEmailAddress" placeholder="name@example.com" name="confirmEmail" ng-model="confirmEmail" reqiured>
+
+								<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted || detailsForm.confirmEmail.$touched">
+									<span ng-show="detailsForm.confirmEmail.$error.required" style="color:red;">required field</span>
+									<span ng-show="!(detailsForm.confirmEmail.$viewValue===detailsForm.email.$viewValue)" style="color:red;">emails do not match</span>
+								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="name">Name</label>
-								<input type="text" class="form-control" id="name" >
+								<input type="text" class="form-control" id="name" name="name" ng-model="name" required >
+								<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted || detailsForm.name.$touched">
+									<span ng-show="detailsForm.name.$error.required" style="color:red;">required field</span>
+								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="surname">Surname</label>
-								<input type="text" class="form-control" id="surname" >
+								<input type="text" class="form-control" id="surname" name="surname" ng-model="surname" required >
+								<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted || detailsForm.surname.$touched">
+									<span ng-show="detailsForm.surname.$error.required" style="color:red;">required field</span>
+								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="fundingSelection">Source of funding</label></br>
 									<select ng-model="selectedFunding" name="fundingSelection" ng-options="option for option in fundingOptions" required></select>
+							
+									<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted || detailsForm.fundingSelection.$touched">
+									<span ng-show="detailsForm.fundingSelection.$error.required" style="color:red;">required field</span>
+								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="studyYear">Level of Study</label></br>
 									<select ng-model="selectedStudyYear" name="studyYear" ng-options="option for option in studyYears" required></select>
+									<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted || detailsForm.studyYear.$touched">
+									<span ng-show="detailsForm.studyYear.$error.required" style="color:red;">required field</span>
+								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="studyInstitution">Study Institution</label></br>
 									<select ng-model="selectedStudyInstitution" name="studyInstitution" ng-options="option for option in institutions" required></select>
+									<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted || detailsForm.studyInstitution.$touched">
+									<span ng-show="detailsForm.studyInstitution.$error.required" style="color:red;">required field</span>
+								</div>
 							</div>
 
 							<div class="form-group">
@@ -63,7 +96,10 @@
 								<label for="building">Selected building</label>
 								<input type="text" class="form-control" id="building" >
 							</div>
-
+							<div class="form-group">
+								<label for="pop">Proof of Payment</label>
+								<input type="file" class="form-control" id="pop" >
+							</div>
 							<div>
 							<button class="btn btn-warning" ng-click="goBack()">Previous</button>
 							<button type="submit" class="btn btn-warning">Submit</button>

@@ -167,6 +167,11 @@ mainApp.controller( "bookingsController", function( $scope , $http,dataService )
 				$scope.nextForm=false;
 				console.log($scope.nextForm);
 			}
+			$scope.test=function(detailsForm){
+				console.log(detailsForm);
+				console.log(detailsForm.email.$viewValue)
+				console.log(detailsForm.confirmEmail.$viewValue)
+			}
 			
 
 		});
