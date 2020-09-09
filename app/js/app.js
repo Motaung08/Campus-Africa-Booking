@@ -7,6 +7,8 @@ mainApp.config(function ($routeProvider) {
         controller: 'bookingsController'
     }).when('/buildings', {
         templateUrl: 'app/views/buildings.html',
+    }).when('/Contact us', {
+        templateUrl: 'app/views/contactUS.html',
     }).otherwise({
         redirectTo: "/"
     });
