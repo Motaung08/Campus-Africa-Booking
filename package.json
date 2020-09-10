@@ -4,7 +4,7 @@
   "description": "- python3 - pip3",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./test/index-spec.js test"
   },
   "repository": {
     "type": "git",
