@@ -4,7 +4,7 @@
   "description": "- python3 - pip3",
   "main": "index.js",
   "scripts": {
-    "test": "./test/index-spec.js test"
+    "test": "./test/index-spec.js"
   },
   "repository": {
     "type": "git",
