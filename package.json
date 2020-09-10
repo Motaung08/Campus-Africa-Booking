@@ -4,12 +4,13 @@
   "description": "- python3 - pip3",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Motaung08/Campus-Africa-Booking.git"
+    "url": "https://github.com/Motaung08/Campus-Africa-Booking.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
