@@ -40,19 +40,21 @@ class Room:
 #modeling tenant
 class Tenant:
 
-	def __init__(self,tenant_id,email,number,name,surname,gender):
+	def __init__(self,tenant_id,email,number,name,surname,gender,room,approved):
 		self.tenant_id=tenant_id
 		self.email=email
 		self.number=number
 		self.name=name
 		self.surname=surname
 		self.gender=gender
+		self.room=room
+		self.approved=approved
 
 	def __str__(self):
-		json=str({"tenant_id":self.tenant_id,"email":self.email,"number":self.number,"name":self.name,"surname":self.surname,"gender":self.gender})
+		json=str({"tenant_id":self.tenant_id,"email":self.email,"number":self.number,"name":self.name,"surname":self.surname,"gender":self.gender,"room":self.room})
 		return json
 	
 	def to_map(self):
-		json={"tenant_id":self.tenant_id,"email":self.email,"number":self.number,"name":self.name,"surname":self.surname,"gender":self.gender}
+		json={"tenant_id":self.tenant_id,"email":self.email,"number":self.number,"name":self.name,"surname":self.surname,"gender":self.gender,"room":self.room}
 		return json
 

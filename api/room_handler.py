@@ -8,14 +8,20 @@ import os
 load_dotenv()
 
 class RoomHandler:
-	def handle_request(self,request):
+
+	def __init__(self):
 		self.client=pymongo.MongoClient(os.getenv("MONGO_URL"))
 		self.database=self.client["Campus_Africa"]
 		self.collection=self.database["Rooms"]
 
+	def handle_request(self,request):		
 		if request.method=="GET":
+			room=request.args.get("room")
 			unit_type=request.args.get("type")
 			parameters={"occupied":False}
+
+			if room!=None:
+				parameters["room"]=room
 
 			if unit_type!=None:
 				parameters["unit type"]=unit_type
@@ -25,13 +31,22 @@ class RoomHandler:
 
 		elif request.method=="POST":
 			return self.post_data(request.get_json())
+
+		elif request.method=="PATCH":
+			return self.update_data(request.get_json())
 	
 	#get units possible filters type,occupation or combination of the 2
 	def get_data(self,parameters):
 		if parameters!=None:
 			# type+occupation
+			# type+occupation
 			if "unit type" in parameters.keys() and "occupied" in parameters.keys():
 				query={"unit type":parameters["unit type"],"occupied":parameters["occupied"]}
+				doc=self.collection.find(query)
+				return dumps(doc)	
+
+			elif "room" in parameters.keys():
+				query={"room":parameters["room"]}
 				doc=self.collection.find(query)
 				return dumps(doc)	
       #type
@@ -71,6 +86,6 @@ class RoomHandler:
 		if parameters!=None:
 			try:
 					query = { "room":parameters["room"]}
-					doc=self.collection.find(query)
+					self.collection.update_one(query,parameters["tenant_id"])
 			except:
 					pass
