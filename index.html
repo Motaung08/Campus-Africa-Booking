@@ -18,6 +18,8 @@
 
 
 			<script src = "app/js/app.js"></script>
+			<script src="app/lib/ng-file-upload-bower-12.2.13/ng-file-upload-all.js"></script> <!-- for no html5 browsers support -->
+			<script src="app/lib/ng-file-upload-bower-12.2.13/ng-file-upload.min.js"></script>
 			<script src="app/services/dataService.js"></script>
 			<script src = "app/controllers/bookingsController.js"></script>
 			<!-- bootstrap -->
@@ -31,7 +33,7 @@
    </head>
 
    <body>
-      <div ng-app = "mainApp">
+      <div ng-app = "mainApp" >
 				<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 					<a class="navbar-brand" href="#">
 						<img src="app/assets/brand/calogo.png" width="30" height="30" alt="">

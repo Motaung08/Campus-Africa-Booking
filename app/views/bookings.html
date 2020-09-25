@@ -13,11 +13,11 @@
 				<div class="col">
 				</br>
 					<div class="container" ng-show="nextForm">
-						<form name="detailsForm" ng-submit="test(detailsForm)"  novalidate>
-							<!-- <div class="form-group">
+						<form name="detailsForm" ng-submit="FinalizeBooking(detailsForm)"  novalidate>
+							<div class="form-group">
 								<label for="exampleInputId">Identity number/Passport number</label>
-								<input type="text" class="form-control" name="identityNumber" aria-describedby="idHelp"  placeholder="Enter identity number" ng-model="identityNumber" ng-pattern="regex" required>
-							</div> -->
+								<input type="text" class="form-control" name="identityNumber" aria-describedby="idHelp"  placeholder="Enter identity number" ng-model="identityNumber" ng-readonly="true">
+							</div>
 
 							<div class="form-group">
 								<label for="emailAddress">Email address</label>
@@ -87,19 +87,27 @@
 								</div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group" >
 								<label for="gender">Gender</label>
-								<input type="text" class="form-control" id="gender" >
+								<input type="text" class="form-control" ng-model="selectedGender" ng-readonly="true" id="gender" >
 							</div>
 
 							<div class="form-group">
 								<label for="building">Selected building</label>
-								<input type="text" class="form-control" id="building" >
+								<input type="text" class="form-control" ng-model="selectedBuilding" ng-readonly="true" id="building" >
 							</div>
+
 							<div class="form-group">
 								<label for="pop">Proof of Payment</label>
-								<input type="file" class="form-control" id="pop" >
+								<div class="button" name="pop" ngf-select="uploadFile($file)" ng-model="file" ngf-multiple="false"><button class="btn">Select</button></div>
+								<input type="text" class="form-control" ng-model="selectedFile" ng-readonly="true" required>
+								<!-- error handling stuff -->
+								<div ng-show="detailsForm.$submitted">
+									<span ng-show="file==null" style="color:red;">required field</span>
+								</div>
+								
 							</div>
+
 							<div>
 							<button class="btn btn-warning" ng-click="goBack()">Previous</button>
 							<button type="submit" class="btn btn-warning">Submit</button>

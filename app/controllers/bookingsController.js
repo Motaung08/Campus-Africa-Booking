@@ -1,4 +1,4 @@
-mainApp.controller( "bookingsController", function( $scope , $http,dataService ) {
+mainApp.controller( "bookingsController", function( $scope , $http, $location,dataService,Upload ) {
 
 			// action variaable booking/ tracking
 			$scope.mapAction = function(action){
@@ -69,9 +69,10 @@ mainApp.controller( "bookingsController", function( $scope , $http,dataService )
 						$scope.availableRooms=results;
 						$scope.noOfPages = Math.max(Math.ceil($scope.availableRooms.length / $scope.numPerPage),1);
 						$scope.setPage();
-
 						$scope.toggle_spinner();
 					}, function onError(response) {
+						alert("Connection error")
+						$scope.toggle_spinner()
 						console.log("data retrival error "+response.statusText);
 				});
 
@@ -88,7 +89,7 @@ mainApp.controller( "bookingsController", function( $scope , $http,dataService )
 				var roomTypeCode = roomTypeMap[$scope.selectedRoomType];
 				var genderMap = {"Male":"M","Female":"F"};
 				var genderCode=genderMap[$scope.selectedGender];
-
+				
 				var code = roomTypeCode+genderCode;
 
 				return code;
@@ -167,11 +168,58 @@ mainApp.controller( "bookingsController", function( $scope , $http,dataService )
 				$scope.nextForm=false;
 				console.log($scope.nextForm);
 			}
-			$scope.test=function(detailsForm){
-				console.log(detailsForm);
-				console.log(detailsForm.email.$viewValue)
-				console.log(detailsForm.confirmEmail.$viewValue)
+
+			$scope.uploadFile=function(file){
+				if(file!=null){
+					$scope.fileSelected=true;
+					$scope.selectedFile=file.name
+					console.log(file)
+				}
+			}
+			$scope.FinalizeBooking=function(detailsForm){
+				
+				if(detailsForm.$valid && $scope.file!=null){
+
+					var student=new Object();
+					student.tenant_id=$scope.identityNumber
+					student.email=$scope.email
+					student.number=""
+					student.name=$scope.name
+					student.surname=$scope.surname
+					student.gender=$scope.selectedGender
+					student.room="49j"+$scope.selectedUnit+$scope.selectedRoom
+					student.pop=$scope.file;
+
+					//send the student
+					$scope.toggle_spinner()
+					$scope.booking=dataService.bookRoom(student).then(function onSuccess(response) {
+						
+						if(response.data!="duplicate"){
+							dataService.uploadPop($scope.file,$scope.identityNumber).then(function (resp) {
+									alert("Booking successful");
+									$location.path("/")
+									$scope.toggle_spinner();
+								}, function (resp) {
+										console.log('Error status: ' + resp.status);
+								}, function (evt) {
+										var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+										console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+							});
+						}
+						
+						else{
+							alert("You already have a booking");
+							toggle_spinner()
+						}
+						
+					}, function onError(response) {
+						alert("Booking unsuccesful");
+						console.log(response.data)
+						$scope.toggle_spinner();
+						console.log("booking error "+response.statusText);
+					});
+					
+				}
 			}
 			
-
 		});
