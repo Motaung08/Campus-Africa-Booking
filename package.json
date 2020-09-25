@@ -4,19 +4,29 @@
   "description": "- python3 - pip3",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "./test/*"
   },
+  "Dependencies": {
+    "mocha": "3.4.2",
+    "chai": "4.0.2"
+},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phantom820/Campus-Africa-Booking.git"
+    "url": "https://github.com/Motaung08/Campus-Africa-Booking.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/phantom820/Campus-Africa-Booking/issues"
+    "url": "https://github.com/Motaung08/Campus-Africa-Booking/issues"
   },
+<<<<<<< HEAD
   "homepage": "https://github.com/phantom820/Campus-Africa-Booking#readme",
   "dependencies": {
     "ng-file-upload": "^12.2.13"
   }
+=======
+  "homepage": "https://github.com/Motaung08/Campus-Africa-Booking#readme"
+>>>>>>> fca1aef95b3f901caf5d1390f8573e79a0cadafb
 }
