@@ -6,6 +6,8 @@ This is an online student residence booking application, in which students will 
 
 ### Features pending
 - Booking tracking
+- Quote generation
+- Booking cancellation
 
 ### Implementation details
 #### Frontend
