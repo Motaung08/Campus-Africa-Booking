@@ -1,4 +1,9 @@
 # Campus-Africa-Booking
+
+![Alt text](https://github.com/phantom820/Campus-Africa-Booking/blob/master/screenshots/loading.png)
+![Alt text](https://github.com/phantom820/Campus-Africa-Booking/blob/master/screenshots/room_form.png)
+![Alt text](https://github.com/phantom820/Campus-Africa-Booking/blob/master/screenshots/details_form.png)
+
 This is an online student residence booking application, in which students will be able reserve rooms for saccomodation during an academic year. Students will be able to book room (make a reservation) and keep track of whether their reservation has been approved and finalized.
 
 ### Features implemented
